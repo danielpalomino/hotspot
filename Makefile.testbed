@@ -1,0 +1,46 @@
+# Output directory
+BUILDDIR = testbed
+
+# Project source directory
+SOURCE_DIR := $(dir $(lastword ($MAKEFILE_LIST)))
+$(info $(SOURCE_DIR))
+
+# See the regular Makefile for the meaning of these two variables.
+VERBOSE = 1
+MATHACCEL = 0
+
+CPPFLAGS = -I"`sh ./pypath`" -I"$(SOURCE_DIR)"
+
+CFLAGS = "-DVERBOSE=$(VERBOSE)" "-DMATHACCEL=$(MATHACCEL)" -Wall -fPIC
+
+LDFLAGS = -shared
+
+SWIG = swig
+
+SWIG_SOURCES = hotspot.i
+SWIG_OBJS = $(addprefix $(BUILDDIR)/,$(SWIG_SOURCES:.i=-swig.c))
+
+C_SOURCES = flp.c flp_desc.c npe.c package.c RCutil.c shape.c temperature_block.c temperature.c temperature_grid.c util.c wire.c hotspot-glue.c
+
+SOURCES = $(C_SOURCES) $(SWIG_OBJS)
+
+OBJS = $(addprefix $(BUILDDIR)/,$(C_SOURCES:.c=.o)) $(SWIG_OBJS:.c=.o)
+
+$(BUILDDIR)/_hotspot.so : $(OBJS)
+	@mkdir -p "$(BUILDDIR)"
+	$(CC) $(LDFLAGS) -o "$@" $^
+
+$(SWIG_OBJS) : $(C_SOURCES) $(SWIG_SOURCES)
+
+$(BUILDDIR)/%-swig.c : $(SOURCE_DIR)/%.i
+	@mkdir -p "$(BUILDDIR)"
+	$(SWIG) -python -o "$@" "$<"
+
+$(BUILDDIR)/%.o : $(SOURCE_DIR)/%.c
+	@mkdir -p "$(BUILDDIR)"
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o "$@" "$<"
+
+.PHONY : clean
+
+clean :
+	rm -f $(BUILDDIR)/_hotspot.so $(BUILDDIR)/hotspot.py $(BUILDDIR)/hotspot.pyc $(OBJS) $(SWIG_OBJS)

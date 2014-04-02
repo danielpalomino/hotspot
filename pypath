@@ -1,0 +1,30 @@
+#!/bin/sh
+################################################################################
+# This script returns the path to Python.h for the python interpreter found in
+# $PATH.
+#
+# For example for Python 2.6 it prints /usr/include/python2.6/Python.h to
+# stdout.
+#
+# Author: Sascha Friedmann                                         Mar 2012
+################################################################################
+
+if ! which python >/dev/null 2>&1; then
+  echo "Cannot find python in PATH." >&2
+  exit 1
+fi
+
+# Get Python version, a tyical output is 'Python 2.7.2+'.
+# And yes, Python prints version to stderr.
+version="`python --version 2>&1`"
+
+# Extrac major.minor version from version number, e.g., 2.7
+version=`echo "$version" | sed -e 's/[pP]ython[[:space:]]*\([0-9]\{1,\}\).\([0-9]\{1,\}\).*/\1.\2/'`
+
+# Look for the Python.h file
+pypath="/usr/include/python${version}"
+if [ -f "$pypath/Python.h" ]; then
+    echo "$pypath"
+else
+    exit 1
+fi

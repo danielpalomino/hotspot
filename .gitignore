@@ -1,0 +1,13 @@
+*.svg
+*~
+*.o
+*-swig.c
+hotspot
+hotfloorplan
+libhotspot.a
+_hotspot.so
+hotspot.py
+hotspot.pyc
+tags
+install.log
+build.log
