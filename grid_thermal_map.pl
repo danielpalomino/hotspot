@@ -202,7 +202,7 @@ if (@ARGV == 6) {
 			$fp.="\t".'<line x1="'.@{$_}[1] .'" y1="'. $end_y .
 			'" x2="'. @{$_}[3] .'" y2="'. $end_y .
 			'" style="stroke:black;stroke-width:30" />'."\n";
-			
+			#draw components names
 			$fp.="\t".'<text x="'.$txt_start_x .'" y="'. $txt_start_y .
 			'" fill="black" text_anchor="start" style="font-size:180" > '. @{$_}[0] .' </text>'."\n";
 		}
@@ -232,14 +232,14 @@ if (@ARGV == 6) {
 				$txt_ymin=$clr_ymin+$h2*0.5;
 				$scale_value=($max_t-$min_t)*(1-$i/($num_levels-1))+$min_t;
 				$scale_value=~s/^(\d+)\.(\d)(\d)\d+/$1\.$2$3/;
-				$fp.="\t".'<text x="'.$scale_xmin .'" y="'. $txt_ymin.
+				$fp.="\t".'<text x="'.($scale_xmin+700) .'" y="'. $txt_ymin.
 				'" fill="black" text_anchor="start" style="font-size:250" > '. $scale_value .' </text>'."\n";
 			}
 		}
 		$clr_ymin+=$h2;
 	}
 	$min_t=~s/^(\d+)\.(\d)(\d)\d+/$1\.$2$3/;
-	$fp.="\t".'<text x="'.$scale_xmin .'" y="'. $clr_ymin .
+	$fp.="\t".'<text x="'.($scale_xmin+700) .'" y="'. $clr_ymin .
 	'" fill="black" text_anchor="start" style="font-size:250" > '. $min_t .' </text>'."\n";
 	}
 	

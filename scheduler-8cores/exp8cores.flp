@@ -1,0 +1,16 @@
+
+# Line Format: <unit-name>\t<width>\t<height>\t<left-x>\t<bottom-y>
+# all dimensions are in meters
+# comment lines begin with a '#'
+# comments and empty lines are ignored
+
+L2_1	0.00680	0.00125	0.00000	0.00000
+Core_4	0.00170	0.00170	0.00000	0.00125
+Core_5	0.00170	0.00170	0.00170	0.00125
+Core_6	0.00170	0.00170 0.00340 0.00125
+Core_7	0.00170	0.00170 0.00510 0.00125
+L2_0	0.00680	0.00125	0.00000	0.00295
+Core_0	0.00170	0.00170	0.00000	0.00420
+Core_1	0.00170	0.00170	0.00170	0.00420
+Core_2	0.00170	0.00170 0.00340 0.00420
+Core_3	0.00170	0.00170 0.00510 0.00420
